@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+	<ol class="breadcrumb">
+		<li><a href="/">Home</a></li>
+		<li>{{ day }}</li>
+	</ol>
+	<div class="page-header">
+		<h1>{{ day }}</h1>
+	</div>
+	<div class="row">
+		{% for pic in pictures %}
+			{% if loop.index0 > 0 and loop.index0 is divisibleby 4 %}
+				</div>
+				<div class="row">
+			{% endif %}
+		<div class="col-sm-3">
+			<a href="/static/img/{{ pic }}" class="thumbnail">
+				<img src="/static/img/{{ pic }}" alt="" />
+				<div class="caption">
+					<h4 class="text-center">{{ times[pic] }}</h4>
+				</div>
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+{% endblock %}

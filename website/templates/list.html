@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+{% block body %}
+	<div class="page-header">
+		<h1>Puppycam</h1>
+	</div>
+	<div class="row">
+		{% for day, title in days|dictsort %}
+			{% if loop.index0 > 0 and loop.index0 is divisibleby 4 %}
+				</div>
+				<div class="row">
+			{% endif %}
+			<div class="col-sm-3">
+				<a href="{{ url_for('day', day=day) }}" class="thumbnail">
+					<img src="static/img/{{ latest_pics[day] }}" alt="" />
+					<div class="caption">
+						<h4 class="text-center">{{ title }}</h4>
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}
