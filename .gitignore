@@ -1,3 +1,4 @@
 .DS_Store
 *.pyc
 /website/static/img/*.*
+app.cfg
