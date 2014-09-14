@@ -13,14 +13,18 @@
 				</div>
 				<div class="row">
 			{% endif %}
-		<div class="col-sm-3">
-			<a href="/static/img/{{ pic }}" class="thumbnail">
-				<img src="/static/img/{{ pic }}" alt="" />
-				<div class="caption">
-					<h4 class="text-center">{{ times[pic] }}</h4>
-				</div>
-			</a>
-		</div>
+			<div class="col-sm-3">
+				<a href="/static/img/{{ pic }}" class="thumbnail">
+					<img src="/static/img/{{ pic }}" alt="" />
+					<div class="caption">
+						<h4 class="text-center">{{ times[pic] }}</h4>
+					</div>
+				</a>
+			</div>
+		{% else %}
+			<div class="col-md-12">
+				<p><em>There doesn't seem to be anything here...</em></p>
+			</div>
 		{% endfor %}
 	</div>
 {% endblock %}
