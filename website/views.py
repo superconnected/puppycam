@@ -6,16 +6,13 @@ import pictures
 @app.route("/list")
 def list():
 	pics_by_day = pictures.pictures_by_day()
-	days = {}
-	latest_pics = {}
+	days = []
 	for key in pics_by_day:
-		days[key] = pictures.pretty_day(key)
-		latest_pics[key] = sorted(pics_by_day[key])[-1]
-	templateData = {
-		'days': days,
-		'latest_pics': latest_pics
-	}
-	return render_template('list.html', **templateData)
+		pretty_day = pictures.pretty_day(key)
+		latest = sorted(pics_by_day[key])[-1]
+		days.append((key, pretty_day, latest))
+	days = sorted(days, key=lambda day: day[0], reverse=True)
+	return render_template('list.html', days=days)
 	
 @app.route("/<day>")
 def day(day):

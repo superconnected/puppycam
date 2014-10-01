@@ -4,16 +4,16 @@
 		<h1>Puppycam</h1>
 	</div>
 	<div class="row">
-		{% for day, title in days|dictsort %}
+		{% for day in days %}
 			{% if loop.index0 > 0 and loop.index0 is divisibleby 4 %}
 				</div>
 				<div class="row">
 			{% endif %}
 			<div class="col-sm-3">
-				<a href="{{ url_for('day', day=day) }}" class="thumbnail">
-					<img src="static/img/{{ latest_pics[day] }}" alt="" />
+				<a href="{{ url_for('day', day=day[0]) }}" class="thumbnail">
+					<img src="static/img/thumbnails/{{ day[2] }}" alt="" />
 					<div class="caption">
-						<h4 class="text-center">{{ title }}</h4>
+						<h4 class="text-center">{{ day[1] }}</h4>
 					</div>
 				</a>
 			</div>

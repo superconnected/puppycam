@@ -4,9 +4,9 @@ from itertools import groupby
 import time
 
 def pictures(img_path=None):
-	"""Get all the .jpg images in the given path (or static/img if no path is provided)"""
+	"""Get all the .jpg images in the given path (or static/img/thumbnails if no path is provided)"""
 	if img_path is None:
-		img_path = os.path.join(os.path.dirname(__file__), 'static/img')
+		img_path = os.path.join(os.path.dirname(__file__), 'static/img/thumbnails')
 	pics = [pic for pic in os.listdir(img_path) if pic.endswith('.jpg')]
 	return pics
 	
