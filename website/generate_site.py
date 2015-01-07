@@ -77,7 +77,7 @@ class SiteGenerator(object):
 		days_html = []
 		for key in self.pics_by_day:
 			latest = sorted(self.pics_by_day[key])[-1]
-			days_html.insert(0, self.pic_template.substitute({'link': key + '.html', 'pic': latest, 'time': self.pretty_day(key)}))
+			days_html.append(self.pic_template.substitute({'link': key + '.html', 'pic': latest, 'time': self.pretty_day(key)}))
 		list_html = self.list_template.substitute({'days': ''.join(days_html)})
 		page_html = self.layout_template.substitute({'body': list_html})
 		with open('list.html', 'w') as list_file:
@@ -87,7 +87,7 @@ class SiteGenerator(object):
 		"""Builds the HTML for each single day"""
 		for key in self.pics_by_day:
 			pics_html = []
-			pics = reversed(self.pics_by_day[key])
+			pics = reversed(sorted(self.pics_by_day[key]))
 			for pic in pics:
 				pics_html.append(self.pic_template.substitute({'link': 'img/full/' + pic, 'pic': pic, 'time': self.time_for_picture(pic)}))
 			day_name = self.pretty_day(key)
