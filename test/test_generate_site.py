@@ -1,5 +1,5 @@
 import unittest
-from ..generate_site import SiteGenerator
+from website.generate_site import SiteGenerator
 
 class SiteGeneratorTests(unittest.TestCase):
 	def setUp(self):
