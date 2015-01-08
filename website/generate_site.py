@@ -103,7 +103,7 @@ class SiteGenerator(object):
 		"""Removes day pages so that old pages won't stick around after that day's pics are deleted"""
 		day_pages = [path for path in os.listdir(self.current_dir) if re.search('\d{4}-\d{2}-\d{2}\.html', path)]
 		for page in day_pages:
-			os.remove(page)
+			os.remove(os.path.join(self.current_dir, page))
 	
 	def generate_site(self):
 		"""Generates the main listing page and pages for each day"""
