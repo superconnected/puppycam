@@ -7,6 +7,7 @@ from string import Template
 class SiteGenerator(object):
 	"""Reads image directories and generates web pages for listing"""
 	def __init__(self):
+		self.current_dir = os.path.dirname(__file__)
 		self.layout_template = self.template('layout')
 		self.list_template = self.template('list')
 		self.day_template = self.template('day')
@@ -15,7 +16,7 @@ class SiteGenerator(object):
 		
 	def template(self, name):
 		"""Creates a string template from the given file contents"""
-		template_path = os.path.join(os.path.dirname(__file__), '_templates/' + name + '.html')
+		template_path = os.path.join(self.current_dir, '_templates/' + name + '.html')
 		temp = None
 		with open(template_path, 'r') as template_file:
 			temp = Template(template_file.read())
@@ -75,12 +76,13 @@ class SiteGenerator(object):
 	def build_list_page(self):
 		"""Builds the HTML for the list of days"""
 		days_html = []
-		for key in self.pics_by_day:
+		for key in reversed(sorted(self.pics_by_day)):
 			latest = sorted(self.pics_by_day[key])[-1]
 			days_html.append(self.pic_template.substitute({'link': key + '.html', 'pic': latest, 'time': self.pretty_day(key)}))
 		list_html = self.list_template.substitute({'days': ''.join(days_html)})
 		page_html = self.layout_template.substitute({'body': list_html})
-		with open('list.html', 'w') as list_file:
+		filename = os.path.join(self.current_dir, 'list.html')
+		with open(filename, 'w') as list_file:
 			list_file.write(page_html)
 
 	def build_day_pages(self):
@@ -93,11 +95,19 @@ class SiteGenerator(object):
 			day_name = self.pretty_day(key)
 			day_html = self.day_template.substitute({'dayName': day_name, 'pics': ''.join(pics_html)})
 			day_page_html = self.layout_template.substitute({'body': day_html})
-			with open(key + '.html', 'w') as day_file:
+			filename = os.path.join(self.current_dir, key + '.html')
+			with open(filename, 'w') as day_file:
 				day_file.write(day_page_html)
+				
+	def prune_day_pages(self):
+		"""Removes day pages so that old pages won't stick around after that day's pics are deleted"""
+		day_pages = [path for path in os.listdir(self.current_dir) if re.search('\d{4}-\d{2}-\d{2}\.html', path)]
+		for page in day_pages:
+			os.remove(page)
 	
 	def generate_site(self):
 		"""Generates the main listing page and pages for each day"""
+		self.prune_day_pages()
 		self.build_list_page()
 		self.build_day_pages()
 
